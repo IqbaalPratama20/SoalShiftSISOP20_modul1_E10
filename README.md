@@ -46,7 +46,24 @@ Setelah itu dicetak array ind dengan indeks 1 hingga indeks 10 dengan menggunaka
 
 **Soal 2**
 
-Penyelesaian a:
+**Penyelesaian a:**
+  1)  if [ ! -e $1 ]
+    then
+  2)  c=$1;
+  3) if [[ $c =~ [0-9] ]]
+    then
+    echo "Input contain number"
+    else
+    4) c+=".txt";
+    5) NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 28 | head -n 1)
+    6) echo $NEW_UUID >> $c
+    fi
+    fi
+    
+- Baris 1 digunakan untuk melakukan pengecekan kalau file yang kita inputkan ada di directory pada saat ini dan jika tidak ada maka bisa melakukan create.
+- Baris 2 c menyimpan nama file lalu dilakukan checking apabila mengandung angka, ketika iya maka tidak jadi membuat file.
+- Baris 4 jika tidak, nama tersebut ditambah format .txt.
+- Baris 5 untuk membuat kalimat random dengan mengambil huruf dan angka random dari /dev/urandom dan membatasi panjang dengan fold dan hanya mengambil bagian awal saja dengan head -n 1, tr dengan parameter -dc digunakan untuk replace kalimat yang kita dapatkan pada baris pertama dari head.
 
 **Penyelesaian b:**
 
