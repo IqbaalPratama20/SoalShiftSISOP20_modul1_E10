@@ -44,5 +44,97 @@ Kemudian setelah penghitungan jumlah profit per region selesai, dilakukan sortin
 Selanjutnya dengan menggunakan perulangan untuk value indeks pada array arr dan perulangan hingga panjang maksimum array min, maka ketika nilai arr[i] sama dengan min[a] maka kita menambah array baru yaitu ind yang nantinya berisi nilai i dimana array ini merupakan array yang menunjukkan urutan region dengan profit paling sedikit hingga paling banyak
 Setelah itu dicetak array ind dengan indeks 1 hingga indeks 10 dengan menggunakan perulangan for dimana akan menghasilkan 10 nama produk dengan profit terkecil pada state hasil no 1b
 
+**soal 2**
+
+**Soal 2**
+
+Penyelesaian a:
+**Penyelesaian b:**
+
+    inode=$(stat -c '%i' "$1")
+- Stat berfungsi untuk menampilkan semua status dari file, dalam hal ini  $1 menjadi filenya dan $i mendapatkan inode dari file tersebut lalu -c befungsi untuk formatting.
+
+	    fs=$(df --output=source "$1" | tail -1)
+- df digunakan untuk mengambil informasi mengenai device name, total blocks, total disk space, used disk space, available disk space and mount points pada file system lalu dispesifikasi untuk file $1 dan diambol keterangan pada baris terakhir.
+
+It can be used to examine and change the state of an ext2 file system.
+
+    crtime=$(sudo debugfs -R 'stat <'"${inode}"'>' "${fs}" 2>/dev/null | grep -oP 'crtime.*--\s*\K.*')
+- debugfs -R digunakan untuk melihat perubahan dari file yang berada pada lokasi `/dev/null` is the null device it takes any input you want and throws it away. It can be used to suppress any output. adalah null device yang mengambil semua input dan membuangnya dan diambil seperlunya, 2 berarti kita membuang hasil debug stat yang berisi error. Lalu setelah mendapatkan output yang diinginkan maka kita lakukan grep pada hasil itu dengan params -o yang berarti hanya yang cocok dengan  'crtime.*--\s*\K.*' yang crtime sendiri itu menghasilkan date dan harus dibaca dengan PCRE (`-P`) untuk ekstraksi data yang diinginkan dan digunakan untuk input `date` yaitu crtime yang ditambah dengan params \s dan \K. Hasil dari crtime adalah hari bulan tahun jam dan sebagainya.
 
 
+    
+	    hours=$(echo $times | cut -d':' -f1) 
+	    times=$(echo $crtime | cut -d' ' -f4)
+- Hours akan berisi jam dari hasil crtime dengan melakukan cut spasi dan mengambil bagian 4 (posisinya di kolom ke empat ketika melakukan cut)
+- Times akan mendapatkan jamnya saja (04:20:sekian) dengan melakukan cut : dan mengambil kolom pertama
+- 
+
+    conv_hours=$((10#$hours))	 
+- Digunakan untuk melakukan konversi dari string ke integer base 10 (karena times sebelumnya adalah string)
+
+	    kamusa=('a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i' 'j' 'k' 'l' 'm' 'n' 'o' 'p' 'q' 'r' 's' 't' 'u' 'v' 'w' 'x' 'y' 'z')
+    
+	    kamusb=('A' 'B' 'C' 'D' 'E' 'F' 'G' 'H' 'I' 'J' 'K' 'L' 'M' 'N' 'O' 'P' 'Q' 'R' 'S' 'T' 'U' 'V' 'W' 'X' 'Y' 'Z')
+    
+	    tempone=${kamusa[$conv_hours]}
+    
+	    tempones=${kamusa[$conv_hours-1]}
+    
+	    tumpone=${kamusb[$conv_hours]}
+    
+	    tumpones=${kamusb[$conv_hours-1]}
+    
+	    name_file="$(echo "$filename" | tr ["$tempone"-za-"$tempones"] [a-z] | tr ["$tumpone"-ZA-"$tumpones"] [A-Z])"
+    
+	    name_file+=".txt"
+
+	    # echo $1
+
+	    mv $1 $name_file
+- kamusa dan kamusb berisi hardcode alfabet dari a sampai z untuk huruf besar dan kecil lalu tempone digunakan untuk menyimpan huruf pada index ke jam dan tempones digunakan untuk menyimpan index ke jam-1, begitu juga untuk tumpone dan tumpones. Lalu name_file akan berisi hasil encrypt dari file name dengan menggunakan modifikasi dari ROT13 chiper yaitu ketika kita ingin melakukan shift sesuai jam maka ketika jam nya 1 a menjadi b atau b menjadi c, ROT 13 chiper bekerja dengan ketika a maka menjadi huruf apa sehingga a-za-b yaitu huruf input pertama menjadi a dengan command tr (translate), dan cara itu digunakan untuk melakukan translate ke semua huruf, -za- berarti untuk huruf kecil dan -ZA- berarti huruf kapital. Hasil dari encrypt digunakan untuk nama file baru.
+
+**Penyelesaian c:**
+
+    inode=$(stat -c '%i' "$1")
+- Stat berfungsi untuk menampilkan semua status dari file, dalam hal ini  $1 menjadi filenya dan $i mendapatkan inode dari file tersebut lalu -c befungsi untuk formatting.
+
+	    fs=$(df --output=source "$1" | tail -1)
+- df digunakan untuk mengambil informasi mengenai device name, total blocks, total disk space, used disk space, available disk space and mount points pada file system lalu dispesifikasi untuk file $1 dan diambol keterangan pada baris terakhir.
+
+It can be used to examine and change the state of an ext2 file system.
+
+    crtime=$(sudo debugfs -R 'stat <'"${inode}"'>' "${fs}" 2>/dev/null | grep -oP 'crtime.*--\s*\K.*')
+- debugfs -R digunakan untuk melihat perubahan dari file yang berada pada lokasi `/dev/null` is the null device it takes any input you want and throws it away. It can be used to suppress any output. adalah null device yang mengambil semua input dan membuangnya dan diambil seperlunya, 2 berarti kita membuang hasil debug stat yang berisi error. Lalu setelah mendapatkan output yang diinginkan maka kita lakukan grep pada hasil itu dengan params -o yang berarti hanya yang cocok dengan  'crtime.*--\s*\K.*' yang crtime sendiri itu menghasilkan date dan harus dibaca dengan PCRE (`-P`) untuk ekstraksi data yang diinginkan dan digunakan untuk input `date` yaitu crtime yang ditambah dengan params \s dan \K. Hasil dari crtime adalah hari bulan tahun jam dan sebagainya.
+
+
+    
+	    hours=$(echo $times | cut -d':' -f1) 
+	    times=$(echo $crtime | cut -d' ' -f4)
+- Hours akan berisi jam dari hasil crtime dengan melakukan cut spasi dan mengambil bagian 4 (posisinya di kolom ke empat ketika melakukan cut)
+- Times akan mendapatkan jamnya saja (04:20:sekian) dengan melakukan cut : dan mengambil kolom pertama
+- 
+
+    conv_hours=$((10#$hours))	 
+- Digunakan untuk melakukan konversi dari string ke integer base 10 (karena times sebelumnya adalah string)
+
+	    kamusa=('a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i' 'j' 'k' 'l' 'm' 'n' 'o' 'p' 'q' 'r' 's' 't' 'u' 'v' 'w' 'x' 'y' 'z')
+    
+	    kamusb=('A' 'B' 'C' 'D' 'E' 'F' 'G' 'H' 'I' 'J' 'K' 'L' 'M' 'N' 'O' 'P' 'Q' 'R' 'S' 'T' 'U' 'V' 'W' 'X' 'Y' 'Z')
+    
+	    tempone=${kamusa[$conv_hours]}
+    
+	    tempones=${kamusa[$conv_hours-1]}
+    
+	    tumpone=${kamusb[$conv_hours]}
+    
+	    tumpones=${kamusb[$conv_hours-1]}
+    
+	    name_file="$(echo "$filename" | tr [a-z] ["$tempone"-za-"$tempones"] | tr [A-Z] ["$tumpone"-ZA-"$tumpones"])"
+    
+	    name_file+=".txt"
+
+	    # echo $1
+
+	    mv $1 $name_file
+- kamusa dan kamusb berisi hardcode alfabet dari a sampai z untuk huruf besar dan kecil lalu tempone digunakan untuk menyimpan huruf pada index ke jam dan tempones digunakan untuk menyimpan index ke jam-1, begitu juga untuk tumpone dan tumpones. Lalu name_file akan berisi hasil encrypt dari file name dengan menggunakan modifikasi dari ROT13 chiper yaitu ketika kita ingin melakukan shift sesuai jam maka ketika jam nya 1 a menjadi b atau b menjadi c, ROT 13 chiper bekerja dengan ketika a maka menjadi huruf apa sehingga a-za-b yaitu huruf input pertama menjadi a dengan command tr (translate), dan cara itu digunakan untuk melakukan translate ke semua huruf, -za- berarti untuk huruf kecil dan -ZA- berarti huruf kapital. Hasil dari encrypt digunakan untuk nama file baru. Untuk decrypt maka dilakukan sebaliknya dengan membalik tr [ -za- ] dan [a-z] menjadi [a-z] dan [ -za- ].
