@@ -47,6 +47,7 @@ Setelah itu dicetak array ind dengan indeks 1 hingga indeks 10 dengan menggunaka
 **Soal 2**
 
 Penyelesaian a:
+
 **Penyelesaian b:**
 
     inode=$(stat -c '%i' "$1")
