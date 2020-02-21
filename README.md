@@ -44,8 +44,6 @@ Kemudian setelah penghitungan jumlah profit per region selesai, dilakukan sortin
 Selanjutnya dengan menggunakan perulangan untuk value indeks pada array arr dan perulangan hingga panjang maksimum array min, maka ketika nilai arr[i] sama dengan min[a] maka kita menambah array baru yaitu ind yang nantinya berisi nilai i dimana array ini merupakan array yang menunjukkan urutan region dengan profit paling sedikit hingga paling banyak
 Setelah itu dicetak array ind dengan indeks 1 hingga indeks 10 dengan menggunakan perulangan for dimana akan menghasilkan 10 nama produk dengan profit terkecil pada state hasil no 1b
 
-**soal 2**
-
 **Soal 2**
 
 Penyelesaian a:
